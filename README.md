@@ -1,2 +1,2 @@
-# book-react-training
-리액트 실습
+# react-redux-test
+리덕스 실습
