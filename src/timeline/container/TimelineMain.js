@@ -1,30 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import store from '../../common/store'
+import React from 'react'
+import { connect } from 'react-redux'
 import { getNextTimeline } from '../../common/mockData'
-import { addTimeline} from '../state'
+import { addTimeline } from '../state'
 import TimelineList from '../component/TimelineList'
 
-function TimelineMain() {
-  const [timelines, setTimeLines] = useState([])
-
-  store.subscribe(() => {
-    const timelines = store.getState().timeline.timelines
-    setTimeLines(timelines)
-  })
-
+function TimelineMain(props) {
   const onAdd = () => {
     const timeline = getNextTimeline();
-    store.dispatch(addTimeline(timeline))
+    props.addTimeline(timeline)
   }
-
   return (
     <div>
       <button onClick={onAdd}>
         타임라인 추가
       </button>
-      <TimelineList timelines={timelines} />
+      <TimelineList timelines={props.timelines} />
     </div>
   )
 }
+const mapStateToProps = state => {
+  return {
+    timelines: state.timeline.timelines,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    addTimeline: timeline => {
+      dispatch(addTimeline(timeline))
+    }
+  }
+}
 
-export default TimelineMain;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TimelineMain)
