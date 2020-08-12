@@ -14,6 +14,7 @@ module.exports = {
       '~': srcPath,
       '@@': srcPath,
       '~~': srcPath,
+      'src': srcPath,
     },
   },
 }

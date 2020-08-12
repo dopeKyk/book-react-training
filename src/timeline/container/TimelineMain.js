@@ -1,37 +1,35 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { getNextTimeline } from '../../common/mockData'
-import { addTimeline } from '../state'
-import TimelineList from '../component/TimelineList'
+import React from 'react';
+import store from '../../common/store';
+import { getNextTimeline } from '../../common/mockData';
+import { addTimeline } from '../state';
+import TimelineList from '../component/TimelineList.js';
 
-function TimelineMain(props) {
-  const onAdd = () => {
+class TimelineMain extends React.PureComponent {
+  state = {
+    timelines: store.getState().timeline.timelines,
+  };
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() =>
+      this.setState({ timelines: store.getState().timeline.timelines }),
+    );
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+  onAdd = () => {
     const timeline = getNextTimeline();
-    props.addTimeline(timeline)
-  }
-  return (
-    <div>
-      <button onClick={onAdd}>
-        타임라인 추가
-      </button>
-      <TimelineList timelines={props.timelines} />
-    </div>
-  )
-}
-const mapStateToProps = state => {
-  return {
-    timelines: state.timeline.timelines,
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    addTimeline: timeline => {
-      dispatch(addTimeline(timeline))
-    }
+    store.dispatch(addTimeline(timeline));
+  };
+  render() {
+    console.log('TimelineMain render');
+    const timelines = store.getState().timeline.timelines;
+    return (
+      <div>
+        <button onClick={this.onAdd}>타임라인 추가</button>
+        <TimelineList timelines={timelines} />
+      </div>
+    );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimelineMain)
+export default TimelineMain;
