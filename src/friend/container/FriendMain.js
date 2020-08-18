@@ -10,7 +10,8 @@ const ageLimitOptions = [15, 20, 25, MAX_AGE_LIMIT]
 const showLimitOptions = [2, 4, 6, MAX_SHOW_LIMIT]
 
 function FriendMain (props) {
-  // console.log(props)
+  // console.log(store.getState())
+  // console.log('FriendMain: ', props)
   const onAdd = () => {
     const friend = getNextFriend();
     props.addFriend(friend);
