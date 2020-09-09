@@ -3,7 +3,6 @@ import { getNextTimeline } from '../../common/mockData';
 import { connect } from 'react-redux';
 import { actions } from '../state';
 import TimelineList from '../component/TimelineList.js';
-import store from '../../common/store'
 function TimelineMain(props) {
   const onLike = (e) => {
     const { timelines } = props;

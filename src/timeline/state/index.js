@@ -37,7 +37,8 @@ const reducer = createReducer(INITIAL_STATE, {
       timeline.likes += action.value;
     }
   },
-  [types.SET_LOADING]: (state, action) => (state.isLoading = action.isLoading)
+  [types.SET_LOADING]: (state, action) => (state.isLoading = action.isLoading),
+  [types.REQUEST_LIKE]: (state, action) => console.log(action.timeline)
 });
 const reducers = [reducer, timelinesReducer];
 export default mergeReducers(reducers);
